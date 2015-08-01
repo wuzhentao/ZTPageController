@@ -4,7 +4,7 @@
 其中有4中展示样式’网易style' ’搜狐style' ’腾讯style1' ’网易style2'
 <br>
 <br>
-**Demo** <br>
+**Demo:** <br>
 <img height="667" width="375" src="https://github.com/IOStao/ZTPageController/blob/master/ZTPageController/Demo/Demo3.gif" />
 <br>
 <br>
