@@ -8,7 +8,7 @@
 <img height="350" src="https://github.com/IOStao/ZTPageController/blob/master/ZTPageController/Demo/Demo3.gif" />
 <br>
 <br>
-**实现** <br>
+##实现方法 <br>
 如果使用这个框架，你只需要这两个方法即可：
 （其中vcclass是控制器的类，Title是控制器的标题，以数组的形式展示）
 ```objective-c
@@ -22,7 +22,8 @@ ZTViewController *vca =[[ZTViewControllealloc]initWithMneuViewStyle:MenuViewStyl
 只需修改头文件中的宏(ZTPage.h)，如下图：
 <img height="350" src="https://github.com/IOStao/ZTPageController/blob/master/ZTPageController/Demo/Demo2.png" />
 
-##还有一个内存管理的问题(这个属性是使当前缓存中储存最大子控制器的数量，这个是仿照网易实现的）
+##还有一个内存管理的问题
+这个属性是使当前缓存中储存最大子控制器的数量，这个是仿照网易实现的
 ```objective-c
 vca.countLimit = 5;
 ```
