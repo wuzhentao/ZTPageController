@@ -42,10 +42,10 @@
 
 /**
  *  --------------------------------------------
- 如果有什么更好地建议，联系我噢.
+ 如果有什么更好地建议或出现BUG，联系我噢.
  //  Github: https://github.com/IOStao
  //  QQ:530413389
- //  Email:zhentaow@163.com
+ //  Email:  https://zhentaow@163.com
  */
 #endif
 
