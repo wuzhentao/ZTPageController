@@ -39,5 +39,13 @@
 #define ScreenWidth [UIScreen mainScreen].bounds.size.width
 #define ScreenHeight [UIScreen mainScreen].bounds.size.height
 #define NavigationBarHeight self.navigationController.navigationBar.frame.size.height;
+
+/**
+ *  --------------------------------------------
+ 如果有什么更好地建议，联系我噢.
+ //  Github: https://github.com/IOStao
+ //  QQ:530413389
+ //  Email:zhentaow@163.com
+ */
 #endif
 
