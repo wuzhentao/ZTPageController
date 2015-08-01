@@ -76,8 +76,12 @@
     if (_controllerCache == nil) {
         _controllerCache = [[NSCache alloc] init];
         // 设置数量限制
+        if(self.countLimit)
+        {
+            _controllerCache.countLimit = self.countLimit;
+        }else{
         _controllerCache.countLimit = 4;
-        _controllerCache.delegate = self;
+        }
     }
     return _controllerCache;
 }
