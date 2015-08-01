@@ -25,7 +25,7 @@ ZTViewController *vca =[[ZTViewControllealloc]initWithMneuViewStyle:MenuViewStyl
 ##还有一个内存管理的问题
 这个属性是使当前缓存中储存最大子控制器的数量，这个是仿照网易实现的
 <br>
-缓存中可以存储最大控制器的量（经测试，NSCache初步是FIFO的，它的最大数量最大就是这个属性，超过会释放当前最先进入的
+缓存中可以存储最大控制器的量（经测试，NSCache初步是FIFO的，它的最大数量最大就是这个属性，超过会释放当前最先进入的)
 ```objective-c
 vca.countLimit = 5;
 ```
