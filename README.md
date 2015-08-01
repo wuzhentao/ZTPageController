@@ -5,7 +5,7 @@
 <br>
 <br>
 **Demo** <br>
-<img height="550" width="350" src="https://github.com/IOStao/ZTPageController/blob/master/ZTPageController/Demo/Demo3.gif" />
+<img height="667" width="375" src="https://github.com/IOStao/ZTPageController/blob/master/ZTPageController/Demo/Demo3.gif" />
 <br>
 <br>
 ##实现方法 <br>
