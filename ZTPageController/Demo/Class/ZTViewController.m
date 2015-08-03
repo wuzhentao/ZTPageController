@@ -90,7 +90,6 @@
     
     [super viewDidLoad];
     self.navigationItem.title = @"新闻";
-    
 }
 
 - (instancetype)initWithMneuViewStyle:(MenuViewStyle)style
