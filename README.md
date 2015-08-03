@@ -15,6 +15,8 @@ ZTViewController *vca =[[ZTViewControllealloc]initWithMneuViewStyle:MenuViewStyl
 [vca loadVC:vcclass AndTitle:titles];
 
 ```
+**使用:**<br>
+只需导入文件夹中的ZTPage的文件，即可使用。
 <br>
 <br>
 ##关于颜色和字体大小的设置
