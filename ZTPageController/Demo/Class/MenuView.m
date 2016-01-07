@@ -81,19 +81,20 @@
 {
     MenuViewBtn *btn = [[MenuViewBtn alloc]init];
     MenuViewBtn *btn1 = [[MenuViewBtn alloc]init];
+    self.sumWidth = 0;
+    
     for (int i = 0; i < self.MenuScrollView.subviews.count; i++){
         btn= self.MenuScrollView.subviews[i];
         if (i>=1) {
             btn1 = self.MenuScrollView.subviews[i-1];
         }
-        CGFloat sumWidth;
         UIFont *titleFont = btn.titleLabel.font;
         CGSize titleS = [btn.titleLabel.text sizeWithfont:titleFont];
         btn.width = titleS.width + 2 *BtnGap;
         btn.x = btn1.x + btn1.width + BtnGap;
         btn.y = 0;
         btn.height = self.height - 2;
-        sumWidth += btn.width;
+        self.sumWidth += btn.width;
         if (btn == [self.MenuScrollView.subviews lastObject]) {
             CGFloat width = self.bounds.size.width;
             CGFloat height = self.bounds.size.height;
@@ -108,7 +109,6 @@
         }
         btn = nil;
         btn1 = nil;
-        self.sumWidth = sumWidth;
     }
     if (self.MenuScrollView.contentSize.width < self.width) {
         CGFloat margin = (ScreenWidth - self.sumWidth)/(self.MenuScrollView.subviews.count + 1);
