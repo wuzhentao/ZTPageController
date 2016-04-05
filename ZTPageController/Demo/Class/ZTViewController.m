@@ -226,7 +226,7 @@
     int Page = (int)(scrollView.contentOffset.x/self.view.width);
    
    //因为我用的UItabbar做的展示，所以切换tabar的时候，会出现控制器不清除的结果，使得通知中心紊乱，其他控制器也可以接收当前控制器发送的通知，所以，我把通知名称设置为唯一的；
-    NSString *name  = [NSString stringWithFormat:@"scrollViewDidFinished%@",self.MenuView];
+    NSString *name  = [NSString stringWithFormat:@"scrollViewDidFinished%zd",self.MenuView.style];
     NSDictionary *info = @{
                            @"index":@(Page)};
     [[NSNotificationCenter defaultCenter]postNotificationName:name  object:nil userInfo:info];

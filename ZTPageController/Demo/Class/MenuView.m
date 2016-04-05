@@ -40,7 +40,7 @@
     }
     [self loadWithScollviewAndBtnWithTitles:titles];
         //接收通知
-    NSString *name = [NSString stringWithFormat:@"scrollViewDidFinished%@",self];
+    NSString *name = [NSString stringWithFormat:@"scrollViewDidFinished%zd",style];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(move:) name:name object:nil];
 
 }
