@@ -16,24 +16,15 @@ typedef enum{
     MenuViewStyleFooldHollow, // 涌入效果 (空心的)
     
 } MenuViewStyle;
-
-
 @class MenuView;
 
 @protocol MenuViewDelegate <NSObject>
-
-@optional
-
 - (void)MenuViewDelegate:(MenuView*)menuciew WithIndex:(int)index;
-
 @end
 
 @interface MenuView : UIView
-
 @property (nonatomic,weak)id<MenuViewDelegate> delegate;
-
 @property (nonatomic,assign)MenuViewStyle style;
-
 
 - (void)SelectedBtnMoveToCenterWithIndex:(int)index WithRate:(CGFloat)rate;
 - (instancetype)initWithMneuViewStyle:(MenuViewStyle)style AndTitles:(NSArray *)titles;

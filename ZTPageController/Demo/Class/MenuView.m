@@ -12,17 +12,16 @@
 #import "ZTPage.h"
 @interface MenuView ()<UIScrollViewDelegate>
 
-@property (nonatomic,weak)UIScrollView *MenuScrollView;
-@property (nonatomic,weak)MenuViewBtn *selectedBtn;
-@property (nonatomic,weak)UIView  *line;
+@property (nonatomic,strong)UIScrollView *MenuScrollView;
+@property (nonatomic,strong)MenuViewBtn *selectedBtn;
+@property (nonatomic,strong)UIView  *line;
 @property (nonatomic,assign)CGFloat sumWidth;
 
 @end
 
 @implementation MenuView
 
-- (instancetype)initWithMneuViewStyle:(MenuViewStyle)style AndTitles:(NSArray *)titles
-{
+- (instancetype)initWithMneuViewStyle:(MenuViewStyle)style AndTitles:(NSArray *)titles {
     if (self = [super init]) {
         self.backgroundColor = [UIColor whiteColor];
         switch (style) {
@@ -40,12 +39,16 @@
                 break;
     }
     [self loadWithScollviewAndBtnWithTitles:titles];
+        //接收通知
+    NSString *name = [NSString stringWithFormat:@"scrollViewDidFinished%@",self];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(move:) name:name object:nil];
+
 }
     return self;
 }
 
-- (void)loadWithScollviewAndBtnWithTitles:(NSArray *)titles
-{
+- (void)loadWithScollviewAndBtnWithTitles:(NSArray *)titles {
+    
     UIScrollView *MenuScrollView = [[UIScrollView alloc]init];
     MenuScrollView.showsVerticalScrollIndicator = NO;
     MenuScrollView.showsHorizontalScrollIndicator = NO;
@@ -67,7 +70,7 @@
                 btn.selectedColor = kSelectedColorFloodH;
             }
         }else{
-            //这里为引入第三方定义字体，只需导入你想要的otf/ttf的字体源文件，修改一下plist中的font设置，再将字体家族和字体名称打印出来。具体详细过程请问百度。
+            //这里为引入第三方定义字体，只需导入你想要的otf/ttf的字体源文件，修改一下plist中的font设置，再将字体家族和字体名称打印出来。具体详细过程请问谷歌。
             btn.fontName = @"经典细圆简";
         }
         
@@ -77,8 +80,8 @@
         }
 }
 
-- (void)layoutSubviews
-{
+- (void)layoutSubviews {
+    [super layoutSubviews];
     MenuViewBtn *btn = [[MenuViewBtn alloc]init];
     MenuViewBtn *btn1 = [[MenuViewBtn alloc]init];
     self.sumWidth = 0;
@@ -123,8 +126,7 @@
     }
 }
 
-- (void)drawRect:(CGRect)rect
-{
+- (void)drawRect:(CGRect)rect {
     [super drawRect:rect];
     
     if (self.style == MenuViewStyleDefault) {
@@ -135,8 +137,7 @@
     }
 }
 
-- (void)addProgressView
-{
+- (void)addProgressView {
     FloodView *view = [[FloodView alloc]init];
     
     MenuViewBtn *btn = [self.MenuScrollView.subviews firstObject];
@@ -164,8 +165,8 @@
     [self.MenuScrollView addSubview:view];
 }
 
-- (void)click:(MenuViewBtn *)btn
-{
+- (void)click:(MenuViewBtn *)btn {
+    
     if (self.selectedBtn == btn) return;
     if ([self.delegate respondsToSelector:@selector(MenuViewDelegate:WithIndex:)]) {
         [self.delegate MenuViewDelegate:self WithIndex:(int)btn.tag];
@@ -188,11 +189,7 @@
     self.selectedBtn = btn;
 }
 
-- (void)SelectedBtnMoveToCenterWithIndex:(int)index WithRate:(CGFloat)Pagerate
-{
-    //接收通知
-    NSString *name = [NSString stringWithFormat:@"scrollViewDidFinished%@",self];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(move:) name:name object:nil];
+- (void)SelectedBtnMoveToCenterWithIndex:(int)index WithRate:(CGFloat)Pagerate {
     
     int page  = (int)(Pagerate +0.5);
     CGFloat rate = Pagerate - index;
@@ -231,18 +228,16 @@
 
 }
 
-- (void)move:(NSNotification *)info
-{
+- (void)move:(NSNotification *)info {
+    
     NSNumber *index =  info.userInfo[@"index"];
     int tag = [index intValue];
     [self MoveCodeWithIndex:tag];
-
 }
 /**
  *  使选中的按钮位移到scollview的中间
  */
-- (void)MoveCodeWithIndex:(int )index
-{
+- (void)MoveCodeWithIndex:(int )index {
     MenuViewBtn *btn = self.MenuScrollView.subviews[index];
     CGRect newframe = [btn convertRect:self.bounds toView:nil];
     CGFloat distance = newframe.origin.x  - self.centerX;
@@ -259,8 +254,7 @@
     }
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     if (scrollView.contentOffset.x <= 0) {
 
         [scrollView setContentOffset:CGPointMake(0 , 0)];
@@ -270,12 +264,11 @@
     }
 }
 
-- (void)dealloc
-{
+- (void)dealloc {
     [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
-- (void)selectWithIndex:(int)index AndOtherIndex:(int)tag
-{
+
+- (void)selectWithIndex:(int)index AndOtherIndex:(int)tag {
     self.selectedBtn = self.MenuScrollView.subviews[index];
     MenuViewBtn *otherbtn = self.MenuScrollView.subviews[tag];
 

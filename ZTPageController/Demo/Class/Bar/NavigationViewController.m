@@ -20,8 +20,7 @@
    
 }
 
-+ (void)initialize
-{
++ (void)initialize {
     
     UIBarButtonItem *item  = [UIBarButtonItem appearance];
     NSMutableDictionary *textAttrs = [NSMutableDictionary dictionary];
@@ -34,11 +33,11 @@
     disableTextAttrs[NSForegroundColorAttributeName] = rgb(123, 123, 123);
     disableTextAttrs[NSFontAttributeName] = [UIFont systemFontOfSize:15];
     [item setTitleTextAttributes:disableTextAttrs forState:UIControlStateDisabled];
+
 }
 
 
-- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated
-{
+- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
     if (self.viewControllers.count > 0) {
         viewController.navigationItem.leftBarButtonItem = [UIBarButtonItem itemWithtTarget:self anction:@selector(back) image:@"icon_back" highlightimage:@"icon_back_highlighted"];
         
@@ -49,8 +48,7 @@
     
 }
 
-- (void)back
-{
+- (void)back {
     [self popViewControllerAnimated:YES];
 }
 @end

@@ -13,11 +13,11 @@
 
 @interface ZTViewController ()<UIScrollViewDelegate,MenuViewDelegate,NSCacheDelegate>
 
-@property (nonatomic,weak)MenuView *MenuView;
+@property (nonatomic,strong)MenuView *MenuView;
 @property (nonatomic,strong)UIScrollView *detailScrollView;
 @property (nonatomic,strong)NSArray *subviewControllers;
 @property (nonatomic,strong)NSMutableArray *controllerFrames;
-@property (nonatomic,weak)UIViewController *selectedViewConTroller;
+@property (nonatomic,strong)UIViewController *selectedViewConTroller;
 @property (nonatomic,strong)NSArray *titles;
 //正在出现的控制器
 @property (nonatomic,strong)NSMutableDictionary *displayVC;
@@ -28,32 +28,28 @@
 
 @implementation ZTViewController
 #pragma mark Lazy load
-- (NSArray *)titles
-{
-    if (_titles == nil) {
+- (NSArray *)titles {
+    if (!_titles) {
         _titles = [NSMutableArray array];
     }
     return _titles;
 }
 
-- (NSMutableDictionary *)displayVC
-{
-    if (_displayVC == nil) {
+- (NSMutableDictionary *)displayVC {
+    if (!_displayVC) {
         _displayVC = [NSMutableDictionary dictionary];
     }
     return _displayVC;
 }
-- (NSArray *)subviewControllers
-{
-    if (_subviewControllers == nil) {
+- (NSArray *)subviewControllers {
+    if (!_subviewControllers) {
         _subviewControllers = [NSMutableArray array];
     }
     return _subviewControllers;
 }
 
-- (UIScrollView *)detailScrollView
-{
-    if (_detailScrollView == nil) {
+- (UIScrollView *)detailScrollView {
+    if (!_detailScrollView) {
         self.detailScrollView = [[UIScrollView alloc]init];
         self.detailScrollView.backgroundColor = [UIColor whiteColor];
         self.detailScrollView.pagingEnabled = YES;
@@ -63,24 +59,21 @@
     return _detailScrollView;
 }
 
-- (NSMutableArray *)controllerFrames
-{
-    if (_controllerFrames == nil) {
+- (NSMutableArray *)controllerFrames {
+    if (!_controllerFrames) {
         _controllerFrames = [NSMutableArray array];
     }
     return _controllerFrames;
 }
 
-- (NSCache *)controllerCache
-{
-    if (_controllerCache == nil) {
+- (NSCache *)controllerCache {
+    if (!_controllerCache) {
         _controllerCache = [[NSCache alloc] init];
         // 设置数量限制
-        if(self.countLimit)
-        {
+        if(self.countLimit) {
             _controllerCache.countLimit = self.countLimit;
         }else{
-        _controllerCache.countLimit = 4;
+            _controllerCache.countLimit = 4;
         }
     }
     return _controllerCache;
@@ -92,8 +85,8 @@
     self.navigationItem.title = @"新闻";
 }
 
-- (instancetype)initWithMneuViewStyle:(MenuViewStyle)style
-{
+- (instancetype)initWithMneuViewStyle:(MenuViewStyle)style {
+    
     if (self = [super init]) {
         switch (style) {
             case MenuViewStyleLine:
@@ -109,27 +102,24 @@
                 self.style = MenuViewStyleDefault;
                 break;
         }
-}
+    }
     return self;
 }
 
-- (void)loadVC:(NSArray *)viewcontrollerClass AndTitle:(NSArray *)titles
-{
+- (void)loadVC:(NSArray *)viewcontrollerClass AndTitle:(NSArray *)titles {
     self.subviewControllers = viewcontrollerClass;
     self.titles  = titles;
     [self loadMenuViewWithTitles:self.titles];
 }
 
-- (void)loadMenuViewWithTitles:(NSArray *)titles
-{
+- (void)loadMenuViewWithTitles:(NSArray *)titles {
     MenuView *Menview = [[MenuView alloc]initWithMneuViewStyle:self.style AndTitles:titles];
     [self.view addSubview:Menview];
     Menview.delegate = self;
     self.MenuView = Menview;
 }
 
-- (void)viewWillLayoutSubviews
-{
+- (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
     
     for (int j = 0; j < self.subviewControllers.count; j++) {
@@ -150,8 +140,8 @@
 }
 
 
-- (void)addViewControllerViewAtIndex:(int)index
-{
+- (void)addViewControllerViewAtIndex:(int)index {
+    
     Class vclass = self.subviewControllers[index];
     UIViewController *vc = [[vclass alloc]init];
     vc.view.frame = [self.controllerFrames[index] CGRectValue];
@@ -161,7 +151,8 @@
     self.selectedViewConTroller = vc;
 }
 
-- (void)removeViewController:(UIViewController *)viewController atIndex:(NSInteger)index{
+- (void)removeViewController:(UIViewController *)viewController atIndex:(NSInteger)index {
+    
     [viewController.view removeFromSuperview];
     [viewController willMoveToParentViewController:nil];
     [viewController removeFromParentViewController];
@@ -172,7 +163,7 @@
   
 }
 
-- (BOOL)isInScreen:(CGRect)frame{
+- (BOOL)isInScreen:(CGRect)frame {
     CGFloat x = frame.origin.x;
     CGFloat ScreenWith = self.detailScrollView.frame.size.width;
     
@@ -185,7 +176,8 @@
     
 }
 
-- (void)addCachedViewController:(UIViewController *)viewController atIndex:(NSInteger)index{
+- (void)addCachedViewController:(UIViewController *)viewController atIndex:(NSInteger)index {
+    
     [self addChildViewController:viewController];
     [self.detailScrollView addSubview:viewController.view];
     [self.displayVC setObject:viewController forKey:@(index)];
@@ -195,8 +187,8 @@
 
 #pragma mark delegate
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    
     int Page = (int)(scrollView.contentOffset.x/self.view.width + 0.5);
     int index = (int)(scrollView.contentOffset.x/self.view.width);
     CGFloat rate = scrollView.contentOffset.x/self.view.width;
@@ -228,8 +220,8 @@
 
 }
 
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    
     if (scrollView.contentOffset.x < 0 || scrollView.contentOffset.x > scrollView.contentSize.width )return;
     int Page = (int)(scrollView.contentOffset.x/self.view.width);
    
@@ -241,8 +233,8 @@
           
 }
 
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
-{
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    
     if (scrollView.contentOffset.x < 0 || scrollView.contentOffset.x > scrollView.contentSize.width )return;
    
     if(!decelerate){
@@ -258,8 +250,8 @@
     }
     }
 }
-- (void)MenuViewDelegate:(MenuView *)menuciew WithIndex:(int)index
-{
+
+- (void)MenuViewDelegate:(MenuView *)menuciew WithIndex:(int)index {
     
     [self removeViewController:self.selectedViewConTroller atIndex:_selectedIndex];
     

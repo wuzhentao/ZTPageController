@@ -10,11 +10,8 @@
 
 @interface FloodView : UIView
 
-@property (nonatomic,weak)UIColor  *color;
-
-@property (nonatomic,assign)BOOL isStroke;
-
-@property (nonatomic,assign)BOOL isLine;
-
-@property (nonatomic,assign)CGColorRef FillColor;
+@property (nonatomic, strong)UIColor  *color;
+@property (nonatomic, assign)BOOL isStroke;
+@property (nonatomic, assign)BOOL isLine;
+@property (nonatomic, assign)CGColorRef FillColor;
 @end

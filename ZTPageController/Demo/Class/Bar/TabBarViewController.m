@@ -47,8 +47,7 @@
 }
 
 - (void)controller:(UIViewController*)controller title:(NSString *)title
-             image:(NSString *)image selectedImage:(NSString *)selectedImage
-{
+             image:(NSString *)image selectedImage:(NSString *)selectedImage {
     
     controller.tabBarItem.image = [UIImage imageNamed:image];
     controller.title = title;
