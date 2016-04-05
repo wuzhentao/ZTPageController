@@ -46,8 +46,8 @@
 }
 
 - (instancetype)initWithShowImages:(NSArray *)images AndTitals:(NSArray *)titals {
+    
     if (self = [super init]) {
-        
         CGFloat width = [UIScreen mainScreen].bounds.size.width;
        
         self.width = width;
@@ -87,7 +87,9 @@
         
         [self loadData];
         [self addtimer];
-      
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addtimer) name:UIApplicationWillEnterForegroundNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removetimer) name:UIApplicationDidEnterBackgroundNotification object:nil];
     }
     return self;
 }
@@ -185,5 +187,6 @@
 - (void)dealloc {
     [_timer invalidate];
     _timer = nil;
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 @end

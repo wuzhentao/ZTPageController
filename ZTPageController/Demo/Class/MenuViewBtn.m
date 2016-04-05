@@ -17,73 +17,11 @@
 @end
 
 @implementation MenuViewBtn
-- (UIColor *)normalColor {
-    if (!_normalColor) {
-        _normalColor = kNomalColor;
-    }
-    return _normalColor;
-}
 
-- (UIColor *)selectedColor {
-    if (!_selectedColor) {
-        _selectedColor = kSelectedColor;
-    }
-    return _selectedColor;
-}
-
-- (void)setSelected:(BOOL)selected {
-    
-    [super setSelected:selected];
-    if (selected) {
-       [self setTitleColor:self.selectedColor forState:UIControlStateNormal];
-    }else
-    {
-        [self setTitleColor:self.normalColor forState:UIControlStateNormal];
-    }
-}
-
-- (UIColor *)titlecolor {
-    if (!_titlecolor) {
-        _titlecolor = self.normalColor;
-    }
-    return _titlecolor;
-}
-
-- (void)setFontSize:(CGFloat)fontSize{
-    if (self.fontName) {
-        self.titleLabel.font = [UIFont fontWithName:self.fontName size:fontSize];
-    }else{
-        self.titleLabel.font = [UIFont systemFontOfSize:fontSize];
-    }
-    _fontSize = fontSize;
-    
-}
-
-- (void)setFontName:(NSString *)fontName{
-    _fontName = fontName;
-    self.fontSize = self.NomrmalSize;
-    
-}
-
--(CGFloat)NomrmalSize {
-    if (_NomrmalSize == 0) {
-        _NomrmalSize = kNormalSize;
-    }
-    return _NomrmalSize;
-}
-
-- (CGFloat)rate {
-    if (_rate == 0) {
-        _rate = Defaultrate;
-    }
-    return _rate;
-}
 - (instancetype)initWithFrame:(CGRect)frame {
     
     if (self = [super initWithFrame:frame]) {
-        
         [self.titleLabel setFont:[UIFont systemFontOfSize:kNormalSize]];
-        
         [self setTitleColor:self.normalColor forState:UIControlStateNormal];
     }
     return self;
@@ -93,10 +31,7 @@
     
     self = [super init];
     if (self) {
-        NSString *title =  titles[index];
-        
-        [self setTitle:title forState:UIControlStateNormal];
-        
+        [self setTitle:titles[index] forState:UIControlStateNormal];
     }
     return self;
 }
@@ -144,6 +79,7 @@
     }
 
 }
+
 - (void)ChangSelectedColorWithRate:(CGFloat)rate {
     [self setRGB];
     CGFloat r = rgba[0] + rgbaGAP[0]*(1-rate);
@@ -159,5 +95,68 @@
     [self ChangSelectedColorWithRate:rate];
     CGFloat scalrate = self.rate - rate * (self.rate - 1);
     self.transform = CGAffineTransformMakeScale(scalrate, scalrate);
+}
+
+#pragma mark getter
+- (UIColor *)normalColor {
+    if (!_normalColor) {
+        _normalColor = kNomalColor;
+    }
+    return _normalColor;
+}
+
+- (UIColor *)selectedColor {
+    if (!_selectedColor) {
+        _selectedColor = kSelectedColor;
+    }
+    return _selectedColor;
+}
+
+- (void)setSelected:(BOOL)selected {
+    
+    [super setSelected:selected];
+    if (selected) {
+        [self setTitleColor:self.selectedColor forState:UIControlStateNormal];
+    }else
+    {
+        [self setTitleColor:self.normalColor forState:UIControlStateNormal];
+    }
+}
+
+- (UIColor *)titlecolor {
+    if (!_titlecolor) {
+        _titlecolor = self.normalColor;
+    }
+    return _titlecolor;
+}
+
+- (void)setFontSize:(CGFloat)fontSize{
+    if (self.fontName) {
+        self.titleLabel.font = [UIFont fontWithName:self.fontName size:fontSize];
+    }else{
+        self.titleLabel.font = [UIFont systemFontOfSize:fontSize];
+    }
+    _fontSize = fontSize;
+    
+}
+
+- (void)setFontName:(NSString *)fontName{
+    _fontName = fontName;
+    self.fontSize = self.NomrmalSize;
+    
+}
+
+-(CGFloat)NomrmalSize {
+    if (_NomrmalSize == 0) {
+        _NomrmalSize = kNormalSize;
+    }
+    return _NomrmalSize;
+}
+
+- (CGFloat)rate {
+    if (_rate == 0) {
+        _rate = Defaultrate;
+    }
+    return _rate;
 }
 @end

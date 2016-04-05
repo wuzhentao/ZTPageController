@@ -14,7 +14,7 @@
 
 @property (nonatomic,strong)UIScrollView *MenuScrollView;
 @property (nonatomic,strong)MenuViewBtn *selectedBtn;
-@property (nonatomic,strong)UIView  *line;
+@property (nonatomic,strong)FloodView  *line;
 @property (nonatomic,assign)CGFloat sumWidth;
 
 @end
@@ -26,24 +26,24 @@
         self.backgroundColor = [UIColor whiteColor];
         switch (style) {
             case MenuViewStyleLine:
-                self.style = MenuViewStyleLine;
+                _style = MenuViewStyleLine;
                 break;
             case MenuViewStyleFoold:
-                self.style = MenuViewStyleFoold;
+                _style = MenuViewStyleFoold;
                 break;
             case MenuViewStyleFooldHollow:
-                self.style = MenuViewStyleFooldHollow;
+                _style = MenuViewStyleFooldHollow;
                 break;
             default:
-                self.style = MenuViewStyleDefault;
+                _style = MenuViewStyleDefault;
                 break;
-    }
+        }
     [self loadWithScollviewAndBtnWithTitles:titles];
         //接收通知
     NSString *name = [NSString stringWithFormat:@"scrollViewDidFinished%zd",style];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(move:) name:name object:nil];
 
-}
+    }
     return self;
 }
 
@@ -82,8 +82,8 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    MenuViewBtn *btn = [[MenuViewBtn alloc]init];
-    MenuViewBtn *btn1 = [[MenuViewBtn alloc]init];
+    MenuViewBtn *btn = nil;
+    MenuViewBtn *btn1 = nil;
     self.sumWidth = 0;
     
     for (int i = 0; i < self.MenuScrollView.subviews.count; i++){
@@ -138,31 +138,21 @@
 }
 
 - (void)addProgressView {
-    FloodView *view = [[FloodView alloc]init];
-    
-    MenuViewBtn *btn = [self.MenuScrollView.subviews firstObject];
-    view.x = btn.x ;
-    view.width = btn.width;
-    view.backgroundColor = [UIColor clearColor];
-    view.color = kSelectedColor;
-    self.line = view;
-    
     if (self.style == MenuViewStyleFooldHollow || self.style == MenuViewStyleFoold){
-        view.FillColor = kNormalColorFlood.CGColor;
-        view.height = self.height/2 + 2;
-        view.y = (self.height - view.height)/2;
+        self.line.FillColor = kNormalColorFlood.CGColor;
+        self.line.height = self.height/2 + 2;
+        self.line.y = (self.height - self.line.height)/2;
         
         if (self.style == MenuViewStyleFooldHollow) {
-            view.isStroke = YES;
-            view.color = [UIColor redColor];
+            self.line.isStroke = YES;
+            self.line.color = [UIColor redColor];
         }
     }else{
-        view.isLine = YES;
-        view.height = 2;
-        view.y = self.height - view.height;
-        view.FillColor = [UIColor redColor].CGColor;
+        self.line.isLine = YES;
+        self.line.height = 2;
+        self.line.y = self.height - self.line.height;
+        self.line.FillColor = [UIColor redColor].CGColor;
     }
-    [self.MenuScrollView addSubview:view];
 }
 
 - (void)click:(MenuViewBtn *)btn {
@@ -264,10 +254,6 @@
     }
 }
 
-- (void)dealloc {
-    [[NSNotificationCenter defaultCenter]removeObserver:self];
-}
-
 - (void)selectWithIndex:(int)index AndOtherIndex:(int)tag {
     self.selectedBtn = self.MenuScrollView.subviews[index];
     MenuViewBtn *otherbtn = self.MenuScrollView.subviews[tag];
@@ -279,5 +265,22 @@
     self.line.width = self.selectedBtn.width;
 
     [self MoveCodeWithIndex:(int)self.selectedBtn.tag];
+}
+
+- (FloodView *)line {
+    if (!_line) {
+        _line = [[FloodView alloc]init];
+        MenuViewBtn *btn = [self.MenuScrollView.subviews firstObject];
+        _line.x = btn.x ;
+        _line.width = btn.width;
+        _line.backgroundColor = [UIColor clearColor];
+        _line.color = kSelectedColor;
+         [self.MenuScrollView addSubview:_line];
+    }
+    return _line;
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
 @end
