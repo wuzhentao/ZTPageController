@@ -19,8 +19,8 @@
     
     self.tableView.rowHeight = 80;
     
-    NSArray *images = @[@"01.jpg"];
-    NSArray *titlles = @[@"01-影流之主"];
+    NSArray *images = @[@"01.jpg",@"02.jpg",@"03.jpg",@"04.jpg",@"05.jpg"];
+    NSArray *titlles = @[@"01-影流之主",@"02-影流之主",@"03-影流之主",@"04-影流之主",@"05-影流之主"];
     NoLimitScorllview *view = [[NoLimitScorllview alloc]initWithShowImages:images AndTitals:titlles];
     view.delegate = self;
     self.tableView.tableHeaderView = view;
