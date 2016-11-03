@@ -53,7 +53,6 @@
     MenuScrollView.showsVerticalScrollIndicator = NO;
     MenuScrollView.showsHorizontalScrollIndicator = NO;
     MenuScrollView.backgroundColor = [UIColor whiteColor];
-    MenuScrollView.delegate = self;
     self.MenuScrollView= MenuScrollView;
     [self addSubview:self.MenuScrollView];
 //btn创建
@@ -236,21 +235,16 @@
     if (index > count-1) return;
 
     if ( self.MenuScrollView.contentOffset.x + btn.x   > self.centerX ) {
-        
-        [self.MenuScrollView setContentOffset:CGPointMake(contenoffsetX + distance + btn.width, 0) animated:YES];
+        float moveX = contenoffsetX + distance + btn.width;
+        float contentOfSum = self.MenuScrollView.contentSize.width - self.MenuScrollView.width;
+        if (moveX > contentOfSum) {
+            [self.MenuScrollView setContentOffset:CGPointMake(contentOfSum, 0) animated:YES];
+        }else{
+            [self.MenuScrollView setContentOffset:CGPointMake(contenoffsetX + distance + btn.width/2, 0) animated:YES];
+        }
     }else{
         
         [self.MenuScrollView setContentOffset:CGPointMake(0 , 0) animated:YES];
-    }
-}
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    if (scrollView.contentOffset.x <= 0) {
-
-        [scrollView setContentOffset:CGPointMake(0 , 0)];
-    }else if(scrollView.contentOffset.x + self.width >= scrollView.contentSize.width){
-        
-        [scrollView setContentOffset:CGPointMake(scrollView.contentSize.width - self.width, 0)];
     }
 }
 
